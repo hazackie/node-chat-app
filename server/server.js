@@ -21,9 +21,24 @@ io.on('connection', (socket) => {
   //   text: 'I just came to my house.'
   // });
 
+  socket.emit('newMessage', {
+    from: 'Admin',
+    text: 'Welcome to chat app'
+  });
+
+  socket.broadcast.emit('newMessage', {
+    from: 'Admin',
+    text: 'New user joined'
+  })
+
   socket.on('createMessage', (message) => {
     console.log('createMessage', message);
-    io.emit('newMessage', {
+    // io.emit('newMessage', {
+    //   from: message.from,
+    //   text: message.text
+    // });
+
+    socket.broadcast.emit('newMessage', {
       from: message.from,
       text: message.text
     });
